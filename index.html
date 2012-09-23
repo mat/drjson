@@ -1,96 +1,382 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>drjson.rb</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>drjson.rb</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
+        </div>
+        <p>DrJson closes abruptly cut-off JSON strings.</p>
 
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="DrJson : Closes abruptly cut-off JSON strings." />
+<pre><code>$ echo &lsquo;{&ldquo;foo&rdquo;:nul&rsquo; | drjson 
+{&ldquo;foo&rdquo;:null}
+</code></pre>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+<p>Regular, well-formed JSON is passed through untouched.</p>
 
-    <title>DrJson</title>
-  </head>
-
-  <body>
-
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/mat/drjson">View on GitHub</a>
-
-          <h1 id="project_title">DrJson</h1>
-          <h2 id="project_tagline">Closes abruptly cut-off JSON strings.</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/mat/drjson/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/mat/drjson/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>Dr. JSON</h1>
-
-<p>Closes abruptly cut-off JSON strings.</p>
-
-<h2>Installation</h2>
-
-<p>Install the gem:</p>
+<p>Install with rubygems</p>
 
 <pre><code>$ gem install drjson
 </code></pre>
 
-<p>Or add this line to your application's Gemfile:</p>
+<p>Find the <a href="https://github.com/mat/drjson/">source on GitHub</a>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nb">require</span> <span class="s1">&#39;strscan&#39;</span>
 
-<pre><code>gem 'drjson'
-</code></pre>
+<span class="k">class</span> <span class="nc">DrJson</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-repair(json)'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-repair(json)">&#182;</a>
+        </div>
+        <h2>repair(json)</h2>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-4'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-4">&#182;</a>
+        </div>
+        <p>Parses and repairs the possbily cut-off input <code>json_str</code>
+in recursive descent fashion. Returns <code>json_str</code> with 
+necesarry closing tags appended.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">repair</span><span class="p">(</span><span class="n">json_str</span><span class="p">)</span>
+    <span class="vi">@input</span> <span class="o">=</span> <span class="no">StringScanner</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">json_str</span><span class="p">)</span>
+    <span class="vi">@result</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+ 
+    <span class="k">begin</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-5'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-5">&#182;</a>
+        </div>
+        <p>Real world JSON has arrays as top level elements, yep.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>      <span class="n">parse_object</span> <span class="o">||</span> <span class="n">parse_array</span>
+      <span class="n">spaces</span>
+    <span class="k">rescue</span> <span class="no">UnexpectedTokenError</span> <span class="o">=&gt;</span> <span class="n">e</span>
+      <span class="k">raise</span> <span class="n">e</span> <span class="k">if</span> <span class="n">debug</span>
+    <span class="k">end</span>
+    <span class="n">result</span>
+  <span class="k">end</span>
+  <span class="k">class</span> <span class="nc">UnexpectedTokenError</span> <span class="o">&lt;</span> <span class="no">StandardError</span> <span class="p">;</span> <span class="k">end</span>
 
-<p>And then execute:</p>
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">options</span> <span class="o">=</span> <span class="p">{})</span>
+    <span class="vi">@debug</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="ss">:debug</span><span class="p">,</span> <span class="kp">false</span><span class="p">)</span>
+  <span class="k">end</span>
 
-<pre><code>$ bundle
-</code></pre>
+  <span class="kp">private</span>
+  <span class="kp">attr_reader</span> <span class="ss">:input</span><span class="p">,</span> <span class="ss">:result</span><span class="p">,</span> <span class="ss">:debug</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-Non-Terminal_Symbols'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Non-Terminal_Symbols">&#182;</a>
+        </div>
+        <h3>Non-Terminal Symbols</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">parse_object</span>
+    <span class="n">spaces</span>
+    <span class="k">if</span> <span class="n">next_is</span> <span class="s2">&quot;{&quot;</span>
+      <span class="n">spaces</span>
+      <span class="k">begin</span>
+        <span class="n">parse_members</span>
+      <span class="k">ensure</span> <span class="c1"># and recursively auto close</span>
+        <span class="n">must_see</span> <span class="s2">&quot;}&quot;</span>
+      <span class="k">end</span>
+      <span class="n">spaces</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
 
-<h2>Usage</h2>
+  <span class="k">def</span> <span class="nf">parse_members</span>
+    <span class="n">parse_pair</span>
+    <span class="n">spaces</span>
+    <span class="k">if</span> <span class="n">next_is</span> <span class="s2">&quot;,&quot;</span>
+      <span class="n">parse_members</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  </pre></div>
+      </td>
+    </tr>
+    <tr id='section-7'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-7">&#182;</a>
+        </div>
+        <p>An object&rsquo;s pair is the strictest of all
+elements: It has to have all syntax elements
+that&rsquo;s why we <code>&amp;&amp;</code> them.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">parse_pair</span>
+    <span class="n">parse_string</span> <span class="o">&amp;&amp;</span>
+    <span class="n">spaces</span> <span class="o">&amp;&amp;</span>
+    <span class="n">must_see</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+    <span class="n">spaces</span> <span class="o">&amp;&amp;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-8'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-8">&#182;</a>
+        </div>
+        <p>We may have to fill in a rhs <em>null</em>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="p">(</span><span class="n">parse_value</span> <span class="o">||</span> <span class="n">append</span><span class="p">(</span><span class="s1">&#39;null&#39;</span><span class="p">))</span>
+  <span class="k">end</span>
 
-<p>You can hand over your poor JSON over command line</p>
+  <span class="k">def</span> <span class="nf">parse_array</span>
+    <span class="n">spaces</span>
+    <span class="k">if</span> <span class="n">next_is</span> <span class="s2">&quot;[&quot;</span>
+      <span class="n">spaces</span>
+      <span class="k">begin</span>
+        <span class="n">parse_elements</span> <span class="o">||</span> <span class="kp">true</span>
+       <span class="k">ensure</span> <span class="c1"># and recursively auto close</span>
+         <span class="n">must_see</span> <span class="s2">&quot;]&quot;</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
 
-<pre><code>$ echo '{"foo":nul' | drjson 
-{"foo":null}
+  <span class="k">def</span> <span class="nf">parse_elements</span>
+    <span class="n">spaces</span>
+    <span class="n">value_found</span> <span class="o">=</span> <span class="n">parse_value</span>
+    <span class="n">spaces</span>
+    <span class="k">while</span> <span class="n">next_is</span> <span class="s2">&quot;,&quot;</span>
+      <span class="n">spaces</span>
+      <span class="n">parse_value</span> <span class="o">||</span> <span class="n">append</span><span class="p">(</span><span class="s1">&#39;null&#39;</span><span class="p">)</span>
+      <span class="n">spaces</span>
+    <span class="k">end</span>
 
-$ echo -n '[7, [42' | drjson
-[7, [42]]
-</code></pre>
+    <span class="n">value_found</span>
+  <span class="k">end</span>
 
-<p>or via file</p>
+  <span class="k">def</span> <span class="nf">parse_value</span>
+    <span class="n">spaces</span>
+    <span class="n">parse_string</span> <span class="o">||</span> <span class="n">parse_number</span> <span class="o">||</span> <span class="n">parse_object</span> <span class="o">||</span> <span class="n">parse_array</span> <span class="o">||</span> <span class="n">consume</span><span class="p">(</span><span class="no">TRUE</span><span class="p">)</span> <span class="o">||</span> <span class="n">consume</span><span class="p">(</span><span class="no">FALSE</span><span class="p">)</span> <span class="o">||</span> <span class="n">consume</span><span class="p">(</span><span class="no">NULL</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="no">NULL</span>  <span class="o">=</span> <span class="sr">/null/</span>
+  <span class="no">FALSE</span> <span class="o">=</span> <span class="sr">/false/</span>
+  <span class="no">TRUE</span>  <span class="o">=</span> <span class="sr">/true/</span>
+ </pre></div>
+      </td>
+    </tr>
+    <tr id='section-Terminal_Symbols'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Terminal_Symbols">&#182;</a>
+        </div>
+        <h3>Terminal Symbols</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">parse_string</span>
+    <span class="n">spaces</span>
+    <span class="k">if</span> <span class="n">next_is</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
+      <span class="n">consume</span> <span class="no">CHAR_SEQUENCE</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-10'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-10">&#182;</a>
+        </div>
+        <p>We don&rsquo;t need to <code>ensure</code> here because we
+don&rsquo;t need to close strings recursively;
+a string cannot contain another string.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>      <span class="n">must_see</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="no">CHAR_SEQUENCE</span> <span class="o">=</span> <span class="sr">/([^\&quot;\\\n]|\\([tbrfn\&quot;\/\\])|\\u[0-9a-f]{4,4})*/i</span>
 
-<pre><code>$ echo -n '{"foo": {"bar"' &gt; my_file.json
-$ drjson my_file.json
-{"foo": {"bar":null}}
-</code></pre>
+  <span class="k">def</span> <span class="nf">parse_number</span>
+    <span class="n">spaces</span>
+    <span class="n">number_found</span> <span class="o">=</span> <span class="n">parse_int</span>
+    <span class="n">parse_frac</span>
+    <span class="n">parse_exp</span>
 
-<h2>Contributing</h2>
+    <span class="n">number_found</span>
+  <span class="k">end</span>
 
-<ol>
-<li>Fork it</li>
-<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
-<li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
-<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
-<li>Create new Pull Request</li>
-</ol>
-      </section>
-    </div>
+  <span class="k">def</span> <span class="nf">parse_int</span>
+    <span class="n">consume</span> <span class="no">MINUS</span>
+    <span class="n">consume</span> <span class="no">DIGITS</span>
+  <span class="k">end</span>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">DrJson maintained by <a href="https://github.com/mat">mat</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
+  <span class="k">def</span> <span class="nf">parse_frac</span>
+    <span class="k">if</span> <span class="n">next_is</span> <span class="s2">&quot;.&quot;</span>
+      <span class="n">consume</span> <span class="no">DIGITS</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
 
-    
+  <span class="k">def</span> <span class="nf">parse_exp</span>
+    <span class="k">if</span> <span class="n">next_is</span><span class="p">(</span><span class="s2">&quot;e&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="n">next_is</span><span class="p">(</span><span class="s2">&quot;E&quot;</span><span class="p">)</span>
+      <span class="n">consume</span><span class="p">(</span><span class="no">MINUS</span><span class="p">)</span> <span class="o">||</span> <span class="n">consume</span><span class="p">(</span><span class="no">PLUS</span><span class="p">)</span>
+      <span class="n">consume</span> <span class="no">DIGITS</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="no">MINUS</span> <span class="o">=</span> <span class="sr">/-/</span>
+  <span class="no">PLUS</span> <span class="o">=</span> <span class="sr">/[+]/</span>
+  <span class="no">DIGITS</span> <span class="o">=</span> <span class="sr">/\d+/</span>
+ </pre></div>
+      </td>
+    </tr>
+    <tr id='section-Helpers'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Helpers">&#182;</a>
+        </div>
+        <h3>Helpers</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">spaces</span>
+    <span class="n">consume</span> <span class="no">ANY_WHITESPACE</span>
+  <span class="k">end</span>
+  <span class="no">ANY_WHITESPACE</span> <span class="o">=</span> <span class="sr">/\s*/</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-12'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-12">&#182;</a>
+        </div>
+        <p><code>must_see</code> makes sure we add the necessary
+amount of (closing) tags to the output</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">must_see</span><span class="p">(</span><span class="n">char</span><span class="p">)</span>
+    <span class="n">spaces</span>
+    <span class="k">if</span> <span class="n">next_is</span> <span class="n">char</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-13'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-13">&#182;</a>
+        </div>
+        <p>All good, input as expected.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>      <span class="n">char</span>
+    <span class="k">elsif</span> <span class="n">input</span><span class="o">.</span><span class="n">eos?</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-14'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-14">&#182;</a>
+        </div>
+        <p>Finally, the case we&rsquo;ve been waiting for:
+Input exhausted, but still elements to close.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>      <span class="n">append</span> <span class="n">char</span>
+    <span class="k">else</span>
+      <span class="n">append</span> <span class="n">char</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-15'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-15">&#182;</a>
+        </div>
+        <p>The magic trick:
+  We implicitly use the stack to count how many closing tags we have/need.
+  We pair with exception&rsquo;s <code>ensure</code> mechanism to actually write them out.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>      <span class="k">if</span> <span class="n">debug</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Seen so far: %s&quot;</span> <span class="o">%</span> <span class="n">result</span><span class="o">.</span><span class="n">clone</span>
+        <span class="k">raise</span> <span class="no">UnexpectedTokenError</span><span class="p">,</span> <span class="n">msg</span>
+      <span class="k">else</span>
+        <span class="k">raise</span> <span class="no">UnexpectedTokenError</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+ </pre></div>
+      </td>
+    </tr>
+    <tr id='section-16'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-16">&#182;</a>
+        </div>
+        <p>Checks whether the next char is <code>exptected_char</code></p>
 
-  </body>
-</html>
+<p>If it is, <code>expected_char</code> is consumed, <code>appended</code> and true is returned.
+If not, this call is a no op and false is returned.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">next_is</span><span class="p">(</span><span class="n">expected_char</span><span class="p">)</span>
+    <span class="n">next_char</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="n">peek</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">next_char</span> <span class="o">==</span> <span class="n">expected_char</span>
+      <span class="n">append</span> <span class="n">input</span><span class="o">.</span><span class="n">getch</span>
+    <span class="k">end</span>
+  <span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-17'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-17">&#182;</a>
+        </div>
+        <p><code>consume</code> is <code>next_is</code>&rsquo;s sibling for arbitrary patterns
+not single chars. Same behavior.</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">consume</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">input</span><span class="o">.</span><span class="n">match?</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+      <span class="n">append</span> <span class="n">input</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="n">str</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">&lt;&lt;</span> <span class="n">str</span>
+  <span class="k">end</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
