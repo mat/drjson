@@ -7,10 +7,10 @@ Gem::Specification.new do |gem|
   gem.name          = "drjson"
   gem.version       = Drjson::VERSION
   gem.authors       = ["Matthias Luedtke"]
-  gem.email         = ["github@matthias.luedtke.de"]
+  gem.email         = ["github@matthias-luedtke.de"]
   gem.description   = %q{Closes abruptly cut-off JSON strings.}
   gem.summary       = gem.description
-  gem.homepage      = "http://drjson.github.com/"
+  gem.homepage      = "https://github.com/mat/drjson"
 
   gem.files         = (`git ls-files`.split($/)).reject{ |path| path =~ /fixtures/}
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
