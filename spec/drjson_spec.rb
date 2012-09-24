@@ -47,9 +47,8 @@ describe DrJson do
     doctor.repair('{"').should == '{"":null}'
     doctor.repair('{').should == '{}'
   end
-   end #completion
+   end
 
-  ##################
   it "works" do
     doctor.repair("[]").should == "[]"
     doctor.repair("[42]").should == "[42]"
@@ -153,15 +152,12 @@ describe DrJson do
 
     json_files.each do |file|
     describe "#{file}" do
-      #it "is parseable with JSON: #{file}" do
-      #  JSON.parse(File.read(file))
-      #end
       it "is parseable with Oj: #{file}" do
         Oj.load(File.read(file))
       end
-      #it "is parseable with Yajl: #{file}" do
-      #  Yajl::Parser.parse(File.read(file))
-      #end
+      it "is parseable with Yajl: #{file}" do
+        Yajl::Parser.parse(File.read(file))
+      end
       it "does pass through correct, real life file #{file}" do
         test_file(file)
       end
