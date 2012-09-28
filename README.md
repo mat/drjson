@@ -40,3 +40,6 @@ or via file
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
+## State of Code
+
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/mat/drjson)
