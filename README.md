@@ -32,6 +32,11 @@ or via file
     $ drjson my_file.json
     {"foo": {"bar":null}}
 
+## State of Code
+
+[![Build Status](https://secure.travis-ci.org/mat/drjson.png)](http://travis-ci.org/mat/drjson) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/mat/drjson)
+
+
 ## Contributing
 
 1. Fork it
@@ -39,7 +44,3 @@ or via file
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
-
-## State of Code
-
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/mat/drjson)
