@@ -2,11 +2,8 @@
 
 require 'drjson'
 
-if filename = ARGV[0]
-  json_like = File.read(filename)
-else
-  json_like = $stdin.read
-end
+# Read in either $stdin or a filename arg
+json_like = ARGF.read
 
 json = DrJson.new.repair(json_like)
 puts json
