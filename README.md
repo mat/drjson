@@ -2,6 +2,9 @@
 
 Closes abruptly cut-off JSON strings.
 
+[![Build Status](https://secure.travis-ci.org/mat/drjson.png)](http://travis-ci.org/mat/drjson) [![Code Climate](https://codeclimate.com/github/mat/drjson.png)](https://codeclimate.com/github/mat/drjson)
+
+
 ## Installation
 
 Install the gem:
@@ -31,10 +34,6 @@ or via file
     $ echo -n '{"foo": {"bar"' > my_file.json
     $ drjson my_file.json
     {"foo": {"bar":null}}
-
-## State of Code
-
-[![Build Status](https://secure.travis-ci.org/mat/drjson.png)](http://travis-ci.org/mat/drjson) [![Code Climate](https://codeclimate.com/github/mat/drjson.png)](https://codeclimate.com/github/mat/drjson)
 
 
 ## Contributing
