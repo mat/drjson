@@ -2,7 +2,7 @@
 
 Closes abruptly cut-off JSON strings. (Say when you want to parse JSON formatted logs that were truncated by syslog.) 
 
-[![Build Status](https://travis-ci.org/mat/drjson.svg?branch=master)](http://travis-ci.org/mat/drjson) [![Code Climate](https://codeclimate.com/github/mat/drjson.png)](https://codeclimate.com/github/mat/drjson)
+[![Build Status](https://travis-ci.org/mat/drjson.svg?branch=master)](http://travis-ci.org/mat/drjson) [![Code Climate](http://img.shields.io/codeclimate/github/mat/drjson.svg)](https://codeclimate.com/github/mat/drjson)
 
 
 ## Installation
