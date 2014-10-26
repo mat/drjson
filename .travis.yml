@@ -8,6 +8,5 @@ rvm:
 script: bundle exec rspec spec/
 notifications:
   email:
-    recepients:
-      - github@matthias-luedtke.de
+    - github@matthias-luedtke.de
 
