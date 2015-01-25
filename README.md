@@ -1,6 +1,6 @@
 # Dr. JSON
 
-Closes abruptly cut-off JSON strings. (Say when you want to parse JSON formatted logs that were truncated by syslog.) 
+Closes abruptly cut-off JSON strings. (Say, when you want to parse JSON formatted logs that were truncated by syslog.) 
 
 [![Build Status](http://img.shields.io/travis/mat/drjson/master.svg?style=flat-square)](http://travis-ci.org/mat/drjson) [![Code Climate](http://img.shields.io/codeclimate/github/mat/drjson.svg?style=flat-square)](https://codeclimate.com/github/mat/drjson)
 
